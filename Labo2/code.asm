@@ -9,9 +9,18 @@
 	mov     word [202h], "S"
 	mov     word [203h], "M"
 
-	mov	AX, [200h]
-	mov	CX, [201h]
-	mov	DI, [203h]
-	mov	DX, [202h]
+	;Direccionamiento Directo
+	mov		AX, [200h]
+
+	;Direccionamiento indirecto por registro
+	mov		BX, 201h
+	mov		CX, [BX]
+
+	;Direccionamiento indirecto por base mas indice
+	mov		BX, 203h
+	mov		DI, [BX+SI]
+
+	;Direccionamiento relativo por registro
+	mov		DX, [SI+100h]
 
 	int	20h
