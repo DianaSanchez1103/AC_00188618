@@ -17,10 +17,10 @@
 	mov		CX, [BX]
 
 	;Direccionamiento indirecto por base mas indice
-	mov		BX, 203h
-	mov		DI, [BX+SI]
+	mov		BX, 202h
+	mov		DX, [BX+DI]
 
 	;Direccionamiento relativo por registro
-	mov		DX, [SI+100h]
+	mov		DI, [SI+203h]
 
 	int	20h
