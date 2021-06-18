@@ -14,21 +14,21 @@ org 100h
 
     modotexto: 
         MOV AH, 0h ; activa modo texto
-        MOV AL, 03h ; modo gráfico deseado, 03h denota un tamaño de 80x25 (80 columnas, 25 filas)
+        MOV AL, 03h ; modo gráfico deseado
         INT 10h
         RET
 
     movercursor:
         MOV AH, 02h ; posiciona el cursor en pantalla.
-        MOV DH, 10 ;fila en la que se mostrará el cursor
-        MOV DL, 20 ;columna en la que se mostrará el cursor
+        MOV DH, 10  ; fila en la que se mostrará el cursor
+        MOV DL, 20 ; columna en la que se mostrará el cursor
         MOV BH, 0h ; número de página
         INT 10h
         RET
 
     escribircaracter: 
         MOV AH, 09h
-        INC DI ;incremento de DI
+        INC DI ; incremento de DI
         CMP DI, 1d ;Compara si DI(contador el ciclo el cual llega hasta 4(los 4 nombres)) es 1
         JE cade1
         CMP DI, 2d ;Compara si DI es 2
@@ -43,48 +43,41 @@ org 100h
     cade1:
         MOV DX, cadena1 ; cadena que vamos a imprimir
         INT 21h
-        MOV AH, 02h ; posiciona el cursor en pantalla.
-        MOV DH, 12 ;fila en la que se mostrará el cursor
-        MOV DL, 20 ;columna en la que se mostrará el cursor
-        MOV BH, 0h ; número de página
-        INT 10h
-        JMP escribircaracter ;Salta a la funcion escribir caracter
+        MOV DH, 12 ;Fila en la cual se ubica el texto
+        JMP incremento
 
     cade2:
         MOV DX, cadena2 ; cadena que vamos a imprimir
         INT 21h
-        MOV AH, 02h ; posiciona el cursor en pantalla.
-        MOV DH, 14 ;fila en la que se mostrará el cursor
-        MOV DL, 20 ;columna en la que se mostrará el cursor
-        MOV BH, 0h ; número de página
-        INT 10h
-        JMP escribircaracter ;Salta a la funcion escribir caracter
+        MOV DH, 14 ;Fila en la cual se ubica el texto
+        JMP incremento
 
     cade3:
         MOV DX, cadena3 ; cadena que vamos a imprimir
         INT 21h
-        MOV AH, 02h ; posiciona el cursor en pantalla.
-        MOV DH, 16 ;fila en la que se mostrará el cursor
-        MOV DL, 20 ;columna en la que se mostrará el cursor
-        MOV BH, 0h ; número de página
-        INT 10h
-        JMP escribircaracter ;Salta a la funcion escribir caracter
+        MOV DH, 16 ;Fila en la cual se ubica el texto
+        JMP incremento
 
     cade4:
         MOV DX, cadena4 ; cadena que vamos a imprimir
         INT 21h
-        MOV AH, 02h ; posiciona el cursor en pantalla.
-        MOV DH, 16 ;fila en la que se mostrará el cursor
-        MOV DL, 20 ;columna en la que se mostrará el cursor
-        MOV BH, 0h ; número de página
-        INT 10h
-        JMP escribircaracter ;Salta a la funcion escribir caracter
+        MOV DH, 18 ;Fila en la cual se ubica el texto
+        JMP incremento
 
     esperartecla:
         MOV AH, 00h ; espera buffer del teclado para avanzar en la siguiente instrucción
         INT 16h
 
         ret
+
+    incremento: ;funcion para ubicar en la columna adecadua cada cadena de texto
+        MOV AH, 02h ; posiciona el cursor en pantalla.
+        MOV DL, 20 ;columna en la que se mostrará el cursor
+        MOV BH, 0h ; número de página
+        INT 10h
+        JMP escribircaracter
+
+
     exit:
         int 20h
 
